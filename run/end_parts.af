@@ -7,8 +7,8 @@
 icylin=1                               ! cylindrical coordinates 
 conv=0.1                               ! unit conversion ( e.g. cm => mm ) 
 freq=2856.0                               ! frequency (MHz) 
-dx=1.0                                 ! mesh size 
-xdri=0.0,ydri=41.13                ! drive point of RF 
+dx=0.3                                 ! mesh size 
+xdri=30.0,ydri=41.13                ! drive point of RF 
 kmethod=1                              ! use beta to compute wave number 
 beta=0.999                               ! Particle velocity for transit-time integrals 
 nbsup=1                              ! boundary :: upper  ( 0:Neumann, 1:Dirichlet )
@@ -18,10 +18,10 @@ nbslf=1                              !          :: left
 &
 
 $po x=0.0, y=0.0 $
-$po x=0.0, y=11.0 $
-$po x=17.5, y=11.0 $
-$po nt=2, x=2.5, y=2.5, x0=17.5, y0=13.5 $
-$po x=20.0, y=41.13 $
-$po x=37.4775, y=41.13 $
-$po x=37.4775, y=0.0 $
+$po x=0.0, y=13.0 $
+$po x=27.5, y=13.0 $
+$po nt=2, x=2.5, y=0.0, x0=27.5, y0=15.5 $
+$po x=30.0, y=41.13 $
+$po x=47.4775, y=41.13 $
+$po x=47.4775, y=0.0 $
 $po x=0.0, y=0.0 $
