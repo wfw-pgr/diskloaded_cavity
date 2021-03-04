@@ -14,7 +14,6 @@ def make__af():
     cnfFile = "dat/parameter.conf"
     const = lcn.load__constants( inpFile=cnfFile )
 
-
     print()
     print( "[make__af.py] outFile :: {0} ".format( const["outFile"] ) )
     print()
@@ -98,7 +97,6 @@ def make__af():
         if ( int( pt[ltype_] ) == 2 ):
             geometry += "$po nt=2, x={0}, y={1}, x0={2}, y0={3} $\n".format( pt[x_], pt[y_], pt[x0_], pt[y0_] )
 
-        
     # ------------------------------------------------- #
     # --- [4] write in a file                       --- #
     # ------------------------------------------------- #
@@ -108,8 +106,51 @@ def make__af():
         f.write( settings )
         f.write( geometry )
 
-
     return()
+
+
+
+# ========================================================= #
+# ===  make in7 ( input file for sf7 )                  === #
+# ========================================================= #
+
+def make__in7():
+
+    # -- execute this script to generate grided field -- #
+    # -- sf7 : post processor for poisson-superfish   -- #
+    # -- in7 : input file for sf7                     -- #
+
+    # ------------------------------------------------- #
+    # --- [1] load config file                      --- #
+    # ------------------------------------------------- #
+
+    import nkUtilities.load__constants as lcn
+    cnfFile = "dat/parameter.conf"
+    const   = lcn.load__constants( inpFile=cnfFile )
+
+    if ( const["flag__auto_in7"] ):
+        const["in7_xMinMaxNum"] = [0.0,3.0*const["cell_length"],const["in7_auto_LI"]]
+        const["in7_yMinMaxNum"] = [0.0,    const["disk_radius"],const["in7_auto_LJ"]]
+    
+    # ------------------------------------------------- #
+    # --- [2] write in file                         --- #
+    # ------------------------------------------------- #
+    
+    line1 = "rect noscreen\n"
+    line2 = "{0} {1} {2} {3}\n".format( const["in7_xMinMaxNum"][0], const["in7_yMinMaxNum"][0], \
+                                        const["in7_xMinMaxNum"][1], const["in7_yMinMaxNum"][1]  )
+    line3 = "{0} {1}\n".format( int( const["in7_xMinMaxNum"][2]-1 ), \
+                                int( const["in7_yMinMaxNum"][2]-1 ) )
+    line4 = "end\n"
+    # line3 :: number of space should be prescribed == Not number of nodes.
+
+    text  = line1 + line2 + line3 + line4
+
+    with open( const["in7File"], "w" ) as f:
+        f.write( text )
+    print( "[make__in7.py] outFile :: {0} ".format( const["in7File"] ) )
+
+
 
 
 # ========================================================= #
@@ -118,3 +159,4 @@ def make__af():
 
 if ( __name__=="__main__" ):
     make__af()
+    make__in7()
